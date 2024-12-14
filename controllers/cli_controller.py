@@ -10,7 +10,7 @@ from models.players import Player
 
 db_commands = Blueprint("db", __name__)
 
-# Create Table Function (CRUD)
+# Create Table Function
 
 
 @db_commands.cli.command("create")
@@ -19,25 +19,17 @@ def create_tables():
     print("Tables Created")
 
 
-# Delete Table Function (CRUD)
+# Delete Table Function
 @db_commands.cli.command("drop")
 def drop_tables():
     db.drop_all()
     print("Tables dropped")
 
+# Seed Data Function
+
 
 @db_commands.cli.command("seed")
 def seed_tables():
-
-    #     students = [
-    #         Student(
-    #             name="Student 1",
-    #             email="student1@email.com",
-    #             address="Sydney"
-    #         ),
-    #         )
-    #     ]
-    #     db.session.add_all(campaigns)
 
     campaigns = [
         Campaign(
@@ -219,6 +211,7 @@ def seed_tables():
             synopsis="there's a monster on the loose"
         ),
     ]
+    db.session.add_all(played_games)
 
     players = [
         Player(
@@ -294,7 +287,7 @@ def seed_tables():
             phone="0400000016"
         ),
     ]
-    db.session.add_all(game_masters)
+    db.session.add_all(players)
 
     db.session.commit()
 
