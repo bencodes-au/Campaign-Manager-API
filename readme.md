@@ -9,12 +9,6 @@ Trello: https://trello.com/b/5qkxRYwy/campaign-manager-api
 - why
 - how
 
-## Planning Stage Write Up
-<img src="campaign_erd.png" alt="Campaign ERD Diagram">
-
-- why python and flask
-- compare to another system database system
-
 ## Set Up 
 - Dependencies
 - VS Code
@@ -36,21 +30,17 @@ Trello: https://trello.com/b/5qkxRYwy/campaign-manager-api
     - code example
 
 ## Licenses
-- put this under MIT License
-- flask license
-    - BSD-3-Clause License
-- marshmallow license
-    - MIT License
-- sqlalchemy license
-    - MIT License
-- psycopg2 license
-    - GNU Lesser General Public License
-- pep8 license
-    - MIT license
+The licenses for this application and all of it's packages can be found below. All of these licenses allow unrestricted use of their functionality provided that the licenses are included and the name of the copyright holder is not used to endore these products. 
+
+This application is covered under the MIT license.
+
+Marshmallow, SQLAlchemy and pep8 are all covered under the MIT License. 
+
+Flask is covered under the BSD-3-Clause License. 
+
+Psycopg2 is covered under the GNU Lesser General Public License. 
 
 ### MIT License
-Copyright <YEAR> <COPYRIGHT HOLDER>
-
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
