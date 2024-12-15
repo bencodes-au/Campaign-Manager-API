@@ -10,7 +10,8 @@ class Game_Master(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     phone = db.Column(db.String(20), unique=True, nullable=False)
 
-# campaign_id relationship
+    # campaign_id relationship
+    game_master = db.relationship("Game_Master", back_populates="campaigns")
 
 
 class Game_Master_Schema(ma.Schema):

@@ -10,7 +10,8 @@ class Players(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     phone = db.Column(db.String(20), unique=True, nullable=False)
 
-# character_id relationship
+    # character_id relationship
+    character = db.relationship("Character", back_populates="players")
 
 
 class Player_Schema(ma.Schema):
