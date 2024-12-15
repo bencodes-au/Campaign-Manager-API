@@ -7,7 +7,6 @@ from models.game_masters import GameMaster
 from models.played_games import PlayedGame
 from models.players import Player
 
-
 db_commands = Blueprint("db", __name__)
 
 # Create Table Function
@@ -18,8 +17,9 @@ def create_tables():
     db.create_all()
     print("Tables Created")
 
-
 # Delete Table Function
+
+
 @db_commands.cli.command("drop")
 def drop_tables():
     db.drop_all()
@@ -30,125 +30,6 @@ def drop_tables():
 
 @db_commands.cli.command("seed")
 def seed_tables():
-
-    campaigns = [
-        Campaign(
-            # GM1
-            name="Medieval Mayhem",
-            genre="Fantasy",
-            description="knights and dragons and magic"
-        ),
-        Campaign(
-            # GM2
-            name="Spooktober",
-            genre="Horror",
-            description="Spooky things are happening in October"
-        ),
-        Campaign(
-            # GM3
-            name="Last Draw",
-            genre="Western",
-            description="rooty tooty point and shooty"
-        ),
-        Campaign(
-            # GM4
-            name="Eureka City",
-            genre="Heroes",
-            description="caped crusaders save the day"
-        )
-    ]
-
-    db.session.add_all(campaigns)
-
-    characters = [
-        Character(
-            # CA1
-            # CH1
-            name="Seraphina Nightshade",
-            backstory="knight turned assassin",
-            skills="Retribution"
-        ),
-        Character(
-            # CA1
-            # CH2
-            name="Elowen Throne",
-            backstory="Healer from the forest",
-            skills="Grace"
-        ),
-        Character(
-            # CA1
-            # CH3
-            name="Kealen Stormrider",
-            backstory="Cleric of the storm god",
-            skills="Storm"
-        ),
-        Character(
-            # CA2
-            # CH4
-            name="Maggie Hollaway",
-            backstory="Nurse sufferred tragic accident",
-            skills="Healing"
-        ),
-        Character(
-            # CA2
-            # CH5
-            name="Victor Graves",
-            backstory="Researcher of eternal life",
-            skills="Occult"
-        ),
-        Character(
-            # CA2
-            # CH6
-            name="Evelyn Blackwood",
-            backstory="Searching for missing daughter",
-            skills="Streetwise"
-        ),
-        Character(
-            # CA3
-            # CH7
-            name="Cass",
-            backstory="Orphaned Cattle Hand",
-            skills="Intuition"
-        ),
-        Character(
-            # CA3
-            # CH8
-            name="Boone",
-            backstory="Slick Talking Bounty Hunter",
-            skills="Dexterity"
-        ),
-        Character(
-            # CA3
-            # CH9
-            name="Jonah",
-            backstory="Soldier turned Drifter",
-            skills="Whiskey"
-        ),
-        Character(
-            # CA4
-            # CH10
-            name="Lyra",
-            backstory="Holder of the Starwind",
-            skills="Cosmic"
-        ),
-        Character(
-            # CA4
-            # CH11
-            name="Tobias",
-            backstory="struck by lightning",
-            skills="Zap"
-        ),
-        Character(
-            # CA4
-            # CH12
-            name="Aurora",
-            backstory="Werewolf in hiding",
-            skills="Hunter"
-        )
-
-    ]
-    db.session.add_all(characters)
-
     game_masters = [
         GameMaster(
             first_name="Aaron",
@@ -176,42 +57,7 @@ def seed_tables():
         ),
     ]
     db.session.add_all(game_masters)
-
-    played_games = [
-        PlayedGame(
-            # GM1
-            synopsis="there was magic"
-        ),
-        PlayedGame(
-            # GM1
-            synopsis="there was dragons"
-        ),
-        PlayedGame(
-            # GM1
-            synopsis="there was knights"
-        ),
-        PlayedGame(
-            # GM2
-            synopsis="the murder mystery"
-        ),
-        PlayedGame(
-            # GM2
-            synopsis="ghosts haunted the manor"
-        ),
-        PlayedGame(
-            # GM3
-            synopsis="there was a dang shootout"
-        ),
-        PlayedGame(
-            # GM4
-            synopsis="we saved the city from the villian"
-        ),
-        PlayedGame(
-            # GM4
-            synopsis="there's a monster on the loose"
-        ),
-    ]
-    db.session.add_all(played_games)
+    db.session.commit()
 
     players = [
         Player(
@@ -288,7 +134,161 @@ def seed_tables():
         ),
     ]
     db.session.add_all(players)
-
     db.session.commit()
 
-    print("Tables seeded")
+    campaigns = [
+        Campaign(
+            name="Medieval Mayhem",
+            genre="Fantasy",
+            description="knights and dragons and magic",
+            game_master_id=game_masters[0].id
+        ),
+        Campaign(
+            name="Spooktober",
+            genre="Horror",
+            description="Spooky things are happening in October",
+            game_master_id=game_masters[1].id
+        ),
+        Campaign(
+            name="Last Draw",
+            genre="Western",
+            description="rooty tooty point and shooty",
+            game_master_id=game_masters[2].id
+        ),
+        Campaign(
+            name="Eureka City",
+            genre="Heroes",
+            description="caped crusaders save the day",
+            game_master_id=game_masters[3].id
+        ),
+    ]
+    db.session.add_all(campaigns)
+    db.session.commit()
+
+    characters = [
+        Character(
+            name="Seraphina Nightshade",
+            backstory="knight turned assassin",
+            skills="Retribution",
+            campaign_id=campaigns[0].id,
+            player_id=players[0].id
+        ),
+        Character(
+            name="Elowen Throne",
+            backstory="Healer from the forest",
+            skills="Grace",
+            campaign_id=campaigns[0].id,
+            player_id=players[1].id
+        ),
+        Character(
+            name="Kealen Stormrider",
+            backstory="Cleric of the storm god",
+            skills="Storm",
+            campaign_id=campaigns[0].id,
+            player_id=players[2].id
+        ),
+        Character(
+            name="Maggie Hollaway",
+            backstory="Nurse suffered tragic accident",
+            skills="Healing",
+            campaign_id=campaigns[1].id,
+            player_id=players[3].id
+        ),
+        Character(
+            name="Victor Graves",
+            backstory="Researcher of eternal life",
+            skills="Occult",
+            campaign_id=campaigns[1].id,
+            player_id=players[4].id
+        ),
+        Character(
+            name="Evelyn Blackwood",
+            backstory="Searching for missing daughter",
+            skills="Streetwise",
+            campaign_id=campaigns[1].id,
+            player_id=players[5].id
+        ),
+        Character(
+            name="Cass",
+            backstory="Orphaned Cattle Hand",
+            skills="Intuition",
+            campaign_id=campaigns[2].id,
+            player_id=players[6].id
+        ),
+        Character(
+            name="Boone",
+            backstory="Slick Talking Bounty Hunter",
+            skills="Dexterity",
+            campaign_id=campaigns[2].id,
+            player_id=players[7].id
+        ),
+        Character(
+            name="Jonah",
+            backstory="Soldier turned Drifter",
+            skills="Whiskey",
+            campaign_id=campaigns[2].id,
+            player_id=players[8].id
+        ),
+        Character(
+            name="Lyra",
+            backstory="Holder of the Starwind",
+            skills="Cosmic",
+            campaign_id=campaigns[3].id,
+            player_id=players[9].id
+        ),
+        Character(
+            name="Tobias",
+            backstory="Struck by lightning",
+            skills="Zap",
+            campaign_id=campaigns[3].id,
+            player_id=players[10].id
+        ),
+        Character(
+            name="Aurora",
+            backstory="Werewolf in hiding",
+            skills="Hunter",
+            campaign_id=campaigns[3].id,
+            player_id=players[11].id
+        )
+    ]
+    db.session.add_all(characters)
+    db.session.commit()
+
+    played_games = [
+        PlayedGame(
+            synopsis="There was magic",
+            campaign_id=campaigns[0].id
+        ),
+        PlayedGame(
+            synopsis="There was dragons",
+            campaign_id=campaigns[0].id
+        ),
+        PlayedGame(
+            synopsis="There was knights",
+            campaign_id=campaigns[0].id
+        ),
+        PlayedGame(
+            synopsis="The murder mystery",
+            campaign_id=campaigns[1].id
+        ),
+        PlayedGame(
+            synopsis="Ghosts haunted the manor",
+            campaign_id=campaigns[1].id
+        ),
+        PlayedGame(
+            synopsis="There was a dang shootout",
+            campaign_id=campaigns[2].id
+        ),
+        PlayedGame(
+            synopsis="We saved the city from the villain",
+            campaign_id=campaigns[3].id
+        ),
+        PlayedGame(
+            synopsis="There's a monster on the loose",
+            campaign_id=campaigns[3].id
+        )
+    ]
+    db.session.add_all(played_games)
+    db.session.commit()
+
+    print("Data seeded successfully!")
