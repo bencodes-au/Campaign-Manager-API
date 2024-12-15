@@ -1,7 +1,7 @@
 from flask import Blueprint
 
 from init import db
-from models.game_masters import Game_master, game_masters_schema, game_master_schema
+from models.game_masters import GameMaster, game_masters_schema, game_master_schema
 
 game_masters_bp = Blueprint(
     "game_masters", __name__, url_prefix="/game_masters")
@@ -14,7 +14,7 @@ game_masters_bp = Blueprint(
 
 @game_masters_bp.route("/")
 def get_game_masters():
-    stmt = db.select(Game_master)
+    stmt = db.select(GameMaster)
     game_masters_list = db.session.scalars(stmt)
     data = game_masters_schema.dump(game_masters_list)
     return data
@@ -24,7 +24,7 @@ def get_game_masters():
 
 @game_masters_bp.route("/<int:game_master_id>")
 def get_student(game_master_id):
-    stmt = db.select(Game_master).filter_by(id=game_master_id)
+    stmt = db.select(GameMaster).filter_by(id=game_master_id)
     game_master = db.session.scalar(stmt)
     if game_master:
         data = game_master_schema.dump(game_master)
@@ -38,7 +38,7 @@ def get_student(game_master_id):
 # Delete
 @game_masters_bp.route("/<int:game_master_id>", methods=["DELETE"])
 def delete_game_master(game_master_id):
-    stmt = db.select(Game_master).filter_by(id=game_master_id)
+    stmt = db.select(GameMaster).filter_by(id=game_master_id)
     game_master = db.session.scalar(stmt)
     if game_master:
         db.session.delete(game_master)

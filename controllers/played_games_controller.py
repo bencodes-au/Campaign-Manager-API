@@ -1,7 +1,7 @@
 from flask import Blueprint
 
 from init import db
-from models.played_games import Played_game, played_games_schema, played_game_schema
+from models.played_games import PlayedGame, played_games_schema, played_game_schema
 
 played_games_bp = Blueprint(
     "played_games", __name__, url_prefix="/played_games")
@@ -14,7 +14,7 @@ played_games_bp = Blueprint(
 
 @played_games_bp.route("/")
 def get_played_games():
-    stmt = db.select(Played_game)
+    stmt = db.select(PlayedGame)
     played_games_list = db.session.scalars(stmt)
     data = played_games_schema.dump(played_games_list)
     return data
@@ -24,7 +24,7 @@ def get_played_games():
 
 @played_games_bp.route("/<int:played_game_id>")
 def get_student(played_game_id):
-    stmt = db.select(Played_game).filter_by(id=played_game_id)
+    stmt = db.select(PlayedGame).filter_by(id=played_game_id)
     played_game = db.session.scalar(stmt)
     if played_game:
         data = played_game_schema.dump(played_game)
@@ -38,7 +38,7 @@ def get_student(played_game_id):
 # Delete
 @played_games_bp.route("/<int:played_game_id>", methods=["DELETE"])
 def delete_played_game(played_game_id):
-    stmt = db.select(Played_game).filter_by(id=played_game_id)
+    stmt = db.select(PlayedGame).filter_by(id=played_game_id)
     played_game = db.session.scalar(stmt)
     if played_game:
         db.session.delete(played_game)

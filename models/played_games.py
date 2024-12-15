@@ -1,21 +1,21 @@
 from init import db, ma
 
-__tablename__ = "played_games"
 
+class PlayedGame(db.Model):
+    __tablename__ = "played_games"
 
-class Played_Game(db.Model):
-    played_games_id = db.Column(db.Integer, primary_key=True)
-    # campaign id
+    id = db.Column(db.Integer, primary_key=True)
+    campaign_id = db.Column(db.Integer, db.ForeignKey(
+        "campaigns.id"), nullable=False)
     synopsis = db.Column(db.String(500))
 
-    # campaign_id relationship
     campaign = db.relationship("Campaign", back_populates="played_games")
 
 
-class Played_Game_Schema(ma.Schema):
+class PlayedGameSchema(ma.Schema):
     class Meta:
-        fields = ("games_played_id", "campaign_id", "synopsis")
+        fields = ("id", "campaign_id", "synopsis")
 
 
-Played_Games_schema = Played_Game_Schema()
-Played_Games_schema = Played_Game_Schema(many=True)
+played_game_schema = PlayedGameSchema()
+played_games_schema = PlayedGameSchema(many=True)

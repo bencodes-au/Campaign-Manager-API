@@ -22,7 +22,7 @@ def get_campaigns():
 
 
 @campaign_bp.route("/<int:campaign_id>")
-def get_student(campaign_id):
+def get_campaign(campaign_id):
     stmt = db.select(Campaign).filter_by(id=campaign_id)
     campaign = db.session.scalar(stmt)
     if campaign:

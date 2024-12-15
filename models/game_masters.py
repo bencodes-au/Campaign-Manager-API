@@ -1,23 +1,23 @@
 from init import db, ma
 
-__tablename__ = "game_masters"
 
+class GameMaster(db.Model):
+    __tablename__ = "game_masters"
 
-class Game_Master(db.Model):
-    game_master_id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(100), nullable=False)
     last_name = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     phone = db.Column(db.String(20), unique=True, nullable=False)
 
-    # campaign_id relationship
-    game_master = db.relationship("Game_Master", back_populates="campaigns")
+    campaigns = db.relationship("Campaign", back_populates="game_master")
 
 
-class Game_Master_Schema(ma.Schema):
+class GameMasterSchema(ma.Schema):
     class Meta:
-        fields = ("game_master_id", "first_name", "last_name" "email", "phone")
+        fields = ("id", "first_name", "last_name", "email", "phone")
 
 
-game_master_schema = Game_Master_Schema()
-game_master_schema = Game_Master_Schema(many=True)
+game_master_schema = GameMasterSchema()
+
+game_masters_schema = GameMasterSchema(many=True)

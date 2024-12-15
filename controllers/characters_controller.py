@@ -22,7 +22,7 @@ def get_characters():
 
 
 @characters_bp.route("/<int:character_id>")
-def get_student(character_id):
+def get_character(character_id):
     stmt = db.select(Character).filter_by(id=character_id)
     character = db.session.scalar(stmt)
     if character:

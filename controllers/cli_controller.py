@@ -3,8 +3,8 @@ from flask import Blueprint
 from init import db
 from models.campaigns import Campaign
 from models.characters import Character
-from models.game_masters import Game_Master
-from models.played_games import Played_Game
+from models.game_masters import GameMaster
+from models.played_games import PlayedGame
 from models.players import Player
 
 
@@ -150,25 +150,25 @@ def seed_tables():
     db.session.add_all(characters)
 
     game_masters = [
-        Game_Master(
+        GameMaster(
             first_name="Aaron",
             last_name="Anderson",
             email="aaronanderson@icloud.com",
             phone="0400000001"
         ),
-        Game_Master(
+        GameMaster(
             first_name="Bob",
             last_name="Brighton",
             email="bobbrighton@gmail.com",
             phone="0400000002"
         ),
-        Game_Master(
+        GameMaster(
             first_name="Clyde",
             last_name="Cliff",
             email="clydecliff@hotmail.com",
             phone="0400000003"
         ),
-        Game_Master(
+        GameMaster(
             first_name="Declan",
             last_name="Davis",
             email="declandavis@gmail.com",
@@ -178,35 +178,35 @@ def seed_tables():
     db.session.add_all(game_masters)
 
     played_games = [
-        Played_Game(
+        PlayedGame(
             # GM1
             synopsis="there was magic"
         ),
-        Played_Game(
+        PlayedGame(
             # GM1
             synopsis="there was dragons"
         ),
-        Played_Game(
+        PlayedGame(
             # GM1
             synopsis="there was knights"
         ),
-        Played_Game(
+        PlayedGame(
             # GM2
             synopsis="the murder mystery"
         ),
-        Played_Game(
+        PlayedGame(
             # GM2
             synopsis="ghosts haunted the manor"
         ),
-        Played_Game(
+        PlayedGame(
             # GM3
             synopsis="there was a dang shootout"
         ),
-        Played_Game(
+        PlayedGame(
             # GM4
             synopsis="we saved the city from the villian"
         ),
-        Played_Game(
+        PlayedGame(
             # GM4
             synopsis="there's a monster on the loose"
         ),
