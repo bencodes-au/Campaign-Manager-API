@@ -6,7 +6,7 @@ from init import db
 from models.campaigns import Campaign, campaigns_schema, campaign_schema
 
 # This blueprint builds a prefix for the routing to enable shorter code blocks for the Campaign Controller.
-campaign_bp = Blueprint("campaigns", __name__, url_prefix="/campaigns")
+campaigns_bp = Blueprint("campaigns", __name__, url_prefix="/campaigns")
 
 # CREATE A CAMPAIGN
 
@@ -17,10 +17,9 @@ campaign_bp = Blueprint("campaigns", __name__, url_prefix="/campaigns")
 # - Adds, commits and returns the new campaign
 # - Checks for conflicts
 
+
 # This defines the route for the request. It is shortened by the above blueprint.
-
-
-@campaign_bp.route("/", methods=["POST"])
+@campaigns_bp.route("/", methods=["POST"])
 def create_campaign():
 
     try:
@@ -63,7 +62,7 @@ def create_campaign():
 
 
 # This defines the route for the request. It is shortened by the above blueprint.
-@campaign_bp.route("/")
+@campaigns_bp.route("/")
 def get_campaigns():
     # This statement selects all inputs from the Campaign Table
     stmt = db.select(Campaign)
@@ -84,10 +83,9 @@ def get_campaigns():
 # - if correct, converts to json and returns it
 # - else returns an error message
 
+
 # This defines the route for a GET request. It is shortened by the above blueprint.
-
-
-@campaign_bp.route("/<int:campaign_id>")
+@campaigns_bp.route("/<int:campaign_id>")
 def get_campaign(campaign_id):
     # This statement selects the entity based on the id and filters it using filter.by
     stmt = db.select(Campaign).filter_by(id=campaign_id)
@@ -104,9 +102,13 @@ def get_campaign(campaign_id):
         return {"message": f"Campaign with id {campaign_id} does not exist"}, 404
 
 # UPDATE A CAMPAIGN
+# This function
+# To do this, this application:
+# -
 
 
-@campaign_bp.route("/<int:campaign_id>", methods=["PUT", "PATCH"])
+# This defines the route for the UPDATE request. It is shortened by the above blueprint.
+@campaigns_bp.route("/<int:campaign_id>", methods=["PUT", "PATCH"])
 def update_campaign(campaign_id):
     try:
         # Find the campaign from the db to be updated
@@ -137,6 +139,10 @@ def update_campaign(campaign_id):
             return {"message": f"Campaign with id {campaign_id} doesn't exist"}, 404
 
     except IntegrityError as err:
+        # This checks for breaches of NON-NULL
+        if err.orig.pgcode == errorcodes.NOT_NULL_VIOLATION:
+            return {"message": f"{err.orig.diag.column_name} is required"}, 409
+        # This checks for breaches of UNIQUE
         if err.orig.pgcode == errorcodes.UNIQUE_VIOLATION:
             return {"message": err.orig.diag.message_detail}, 409
 
@@ -146,8 +152,7 @@ def update_campaign(campaign_id):
 
 
 # This defines the route for the DELETE request. It is shortened by the above blueprint.
-
-@campaign_bp.route("/<int:campaign_id>", methods=["DELETE"])
+@campaigns_bp.route("/<int:campaign_id>", methods=["DELETE"])
 def delete_campaign(campaign_id):
     # This statement selects the entity based on the id and filters it using filter.by
     stmt = db.select(Campaign).filter_by(id=campaign_id)
