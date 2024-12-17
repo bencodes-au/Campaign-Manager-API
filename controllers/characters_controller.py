@@ -46,6 +46,9 @@ def create_character():
         # This checks for breaches of NON-NULL
         if err.orig.pgcode == errorcodes.NOT_NULL_VIOLATION:
             return {"message": f"{err.orig.diag.column_name} is required"}, 409
+        # This checks for breaches of UNIQUE
+        if err.orig.pgcode == errorcodes.UNIQUE_VIOLATION:
+            return {"message": "Character name must be unique within the campaign"}, 409
 
 # READ ALL CHARACTERS
 

@@ -4,6 +4,12 @@ from init import db, ma
 class Character(db.Model):
     __tablename__ = "characters"
 
+    # This prevents characters having the same name in the same campaign
+    __table_args__ = (
+        db.UniqueConstraint("name", "campaign_id",
+                            name="unique_character_per_campaign"),
+    )
+
     id = db.Column(db.Integer, primary_key=True)
     campaign_id = db.Column(db.Integer, db.ForeignKey(
         "campaigns.id"), nullable=False)

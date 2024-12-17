@@ -45,6 +45,9 @@ def create_player_campaign():
         # This checks for breaches of NON-NULL
         if err.orig.pgcode == errorcodes.NOT_NULL_VIOLATION:
             return {"message": f"{err.orig.diag.column_name} is required"}, 409
+        # This checks for breaches of UNIQUE
+        if err.orig.pgcode == errorcodes.UNIQUE_VIOLATION:
+            return {"message": "Players cannot be in this campaign multiple times"}, 409
 
 
 # READ ALL PLAYER CAMPAIGNS
