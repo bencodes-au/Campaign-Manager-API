@@ -10,9 +10,10 @@ class Player(db.Model):
     email = db.Column(db.String(100), unique=True)
     phone = db.Column(db.String(20), unique=True)
 
-    characters = db.relationship("PlayerCampaign", back_populates="player")
     campaigns = db.relationship(
         "PlayerCampaign", back_populates="player", cascade="all, delete")
+
+    characters = db.relationship("Character", back_populates="player")
 
 
 class PlayerSchema(ma.Schema):

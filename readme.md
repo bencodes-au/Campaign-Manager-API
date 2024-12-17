@@ -72,36 +72,6 @@ This application has a number of dependencices which should be used in a virtual
 4. Install dependencies: pip install -r requirements.txt
 
 
-# What This Application Can Do
-This application has 5 entities
-- Game Master
-- Character
-- Player
-- Campaign
-- Played Games
-
-The functions below can apply to any of these entities. 
-
-## Create
-This allows the user to add data to the database. This does this by ...
-
-
-
-## Read Select
-This allows the user to select data in the database to read. To do so, the function creates a route (using dynamic routing), constructs a query to find the object, and filters by the given id. If it is found, it returns the data in a json format, and if not, provides a 404 error. 
-
-
-## Read All 
-This allows the user to select an entity within the database and read all of it's contents. To do this, a route is defined within Flask that retrieves a list from the database. It first constructs a query using the SQLAlchemy library to select all the current entries within the Campaign model, fetches the resulting rows, returns them as a list of objects, and then lists them in a suitable format (JSON).
-
-
-## Update 
-This allows the user to update an pre-existing entity within the database. This does this by...
-
-## Delete 
-This allows the user to search for a specific entity within the database and delete it. This does this by 
-
-
 # Licenses
 The licenses for this application and all of it's packages can be found below. All of these licenses allow unrestricted use of their functionality provided that the licenses are included and the name of the copyright holder is not used to endorse these products. 
 

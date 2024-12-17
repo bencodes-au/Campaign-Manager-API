@@ -10,13 +10,14 @@ from models.players import Player
 
 db_commands = Blueprint("db", __name__)
 
+
 # Create Table Function
 
 
 @db_commands.cli.command("create")
 def create_tables():
     db.create_all()
-    print("Tables Created")
+    print("Tables Successfully Created")
 
 # Delete Table Function
 
@@ -24,7 +25,7 @@ def create_tables():
 @db_commands.cli.command("drop")
 def drop_tables():
     db.drop_all()
-    print("Tables dropped")
+    print("Tables Successfully Dropped")
 
 # Seed Data Function
 
@@ -290,6 +291,9 @@ def seed_tables():
         )
     ]
 
+    db.session.add_all(played_games)
+    db.session.commit()
+
     player_campaigns = [
         PlayerCampaign(
             player_id=players[0].id,
@@ -343,7 +347,4 @@ def seed_tables():
     db.session.add_all(player_campaigns)
     db.session.commit()
 
-    db.session.add_all(played_games)
-    db.session.commit()
-
-    print("Data was seeded successfully")
+    print("Data was Seeded Successfully")

@@ -1,5 +1,8 @@
 from init import db, ma
 
+from models.campaigns import Campaign
+from models.players import Player
+
 
 class Character(db.Model):
     __tablename__ = "characters"
@@ -14,7 +17,7 @@ class Character(db.Model):
     campaign_id = db.Column(db.Integer, db.ForeignKey(
         "campaigns.id"), nullable=False)
     player_id = db.Column(db.Integer, db.ForeignKey(
-        "player.id"), nullable=False)
+        "players.id"), nullable=False)
     name = db.Column(db.String(100), nullable=False)
     backstory = db.Column(db.String(100))
     skills = db.Column(db.String(100))

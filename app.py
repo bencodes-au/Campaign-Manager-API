@@ -2,15 +2,14 @@ import os
 
 from flask import Flask
 
-
 from init import db, ma
 from controllers.cli_controller import db_commands
-from controllers.campaigns_controller import db_campaigns
-from controllers.characters_controller import db_characters
-from controllers.game_masters_controller import db_game_masters
-from controllers.played_games_controller import db_played_games
-from controllers.player_campaigns_controller import db_player_campaigns
-from controllers.players_controller import db_players
+from controllers.game_masters_controller import game_masters_bp
+from controllers.players_controller import players_bp
+from controllers.campaigns_controller import campaigns_bp
+from controllers.characters_controller import characters_bp
+from controllers.player_campaigns_controller import player_campaigns_bp
+from controllers.played_games_controller import played_games_bp
 
 
 def create_app():
@@ -18,13 +17,20 @@ def create_app():
 
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URI")
 
+    # Returns data in the order they've been added (instead of alphabetical)
+    app.json.sort_keys = False
+
+    # Initialises Libraries
     db.init_app(app)
     ma.init_app(app)
 
+    # registers the controllers
     app.register_blueprint(db_commands)
-    app.register_blueprint(db_campaigns)
-    app.register_blueprint(db_characters)
-    app.register_blueprint(db_game_masters)
-    app.register_blueprint(db_played_games)
-    app.register_blueprint(db_player_campaigns)
-    app.register_blueprint(db_players)
+    app.register_blueprint(campaigns_bp)
+    app.register_blueprint(characters_bp)
+    app.register_blueprint(game_masters_bp)
+    app.register_blueprint(played_games_bp)
+    app.register_blueprint(player_campaigns_bp)
+    app.register_blueprint(players_bp)
+
+    return app
