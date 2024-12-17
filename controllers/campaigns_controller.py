@@ -1,4 +1,6 @@
-from flask import Blueprint
+from flask import Blueprint, request
+from sqlalchemy.exc import IntegrityError
+from psycopg2 import errorcodes
 
 from init import db
 from models.campaigns import Campaign, campaigns_schema, campaign_schema
@@ -7,6 +9,44 @@ from models.campaigns import Campaign, campaigns_schema, campaign_schema
 campaign_bp = Blueprint("campaigns", __name__, url_prefix="/campaigns")
 
 # Create a Campaign
+
+# This function creates a new entry
+# To do this, the application:
+# - Loads in the schema
+# - Turns the entry fields for the entry into an object
+# - Adds, commits and returns the new entry
+# - Checks for conflicts
+
+
+@campaign_bp.route("/", methods=["POST"])
+def create_campaign():
+
+    try:
+        # This loads in the campaign schema
+        body_data = campaign_schema().load(request.get_json())
+
+        # This creates a new object with the required criteria
+        new_campaign = Campaign(
+            name=body_data.get("name"),
+            genre=body_data.get("genre"),
+            description=body_data.get("description"),
+            game_master_id=body_data.get("game_master_id")
+        )
+
+        # This adds and commits the entry
+        db.session.add(new_campaign)
+        db.session.commit()
+
+        # This returns the new entry
+        return campaign_schema().dump(new_campaign), 201
+    # This checks for conflicts between requests and conditions for the code (409)
+    except IntegrityError as err:
+        # This checks for breaches of NON-NULL
+        if err.orig.pgcode == errorcodes.NOT_NULL_VIOLATION:
+            return {"message": f"{err.orig.diag.column_name} is required"}, 409
+        # This checks for breaches of UNIQUE
+        if err.orig.pgcode == errorcodes.UNIQUE_VIOLATION:
+            return {"message": err.orig.diag.message_detail}, 409
 
 
 # READ ALL CAMPAIGNS

@@ -5,6 +5,7 @@ from models.campaigns import Campaign
 from models.characters import Character
 from models.game_masters import GameMaster
 from models.played_games import PlayedGame
+from models.player_campaigns import PlayerCampaign
 from models.players import Player
 
 db_commands = Blueprint("db", __name__)
@@ -288,7 +289,61 @@ def seed_tables():
             campaign_id=campaigns[3].id
         )
     ]
+
+    player_campaigns = [
+        PlayerCampaign(
+            player_id=players[0].id,
+            campaign_id=campaigns[0].id
+        ),
+        PlayerCampaign(
+            player_id=players[1].id,
+            campaign_id=campaigns[0].id
+        ),
+        PlayerCampaign(
+            player_id=players[2].id,
+            campaign_id=campaigns[0].id
+        ),
+        PlayerCampaign(
+            player_id=players[3].id,
+            campaign_id=campaigns[1].id
+        ),
+        PlayerCampaign(
+            player_id=players[4].id,
+            campaign_id=campaigns[1].id
+        ),
+        PlayerCampaign(
+            player_id=players[5].id,
+            campaign_id=campaigns[1].id
+        ),
+        PlayerCampaign(
+            player_id=players[6].id,
+            campaign_id=campaigns[2].id
+        ),
+        PlayerCampaign(
+            player_id=players[7].id,
+            campaign_id=campaigns[2].id
+        ),
+        PlayerCampaign(
+            player_id=players[8].id,
+            campaign_id=campaigns[2].id
+        ),
+        PlayerCampaign(
+            player_id=players[9].id,
+            campaign_id=campaigns[3].id
+        ),
+        PlayerCampaign(
+            player_id=players[10].id,
+            campaign_id=campaigns[3].id
+        ),
+        PlayerCampaign(
+            player_id=players[11].id,
+            campaign_id=campaigns[3].id
+        )
+    ]
+    db.session.add_all(player_campaigns)
+    db.session.commit()
+
     db.session.add_all(played_games)
     db.session.commit()
 
-    print("Data seeded successfully!")
+    print("Data was seeded successfully")

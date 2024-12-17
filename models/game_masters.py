@@ -7,8 +7,8 @@ class GameMaster(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(100), nullable=False)
     last_name = db.Column(db.String(100), nullable=False)
-    email = db.Column(db.String(100), unique=True, nullable=False)
-    phone = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(100), unique=True)
+    phone = db.Column(db.String(20), unique=True)
 
     campaigns = db.relationship("Campaign", back_populates="game_master")
 
