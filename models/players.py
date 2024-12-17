@@ -11,7 +11,8 @@ class Player(db.Model):
     phone = db.Column(db.String(20), unique=True)
 
     characters = db.relationship("PlayerCampaign", back_populates="player")
-    campaigns = db.relationship("PlayerCampaign", back_populates="player")
+    campaigns = db.relationship(
+        "PlayerCampaign", back_populates="player", cascade="all, delete")
 
 
 class PlayerSchema(ma.Schema):

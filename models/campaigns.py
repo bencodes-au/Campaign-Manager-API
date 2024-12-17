@@ -12,9 +12,12 @@ class Campaign(db.Model):
     description = db.Column(db.String(100))
 
     game_master = db.relationship("GameMaster", back_populates="campaigns")
-    characters = db.relationship("Character", back_populates="campaign")
-    played_games = db.relationship("PlayedGame", back_populates="campaign")
-    players = db.relationship("PlayerCampaign", back_populates="campaign")
+    characters = db.relationship(
+        "Character", back_populates="campaign", cascade="all, delete")
+    played_games = db.relationship(
+        "PlayedGame", back_populates="campaign", cascade="all, delete")
+    players = db.relationship(
+        "PlayerCampaign", back_populates="campaign", cascade="all, delete")
 
 
 class CampaignSchema(ma.Schema):

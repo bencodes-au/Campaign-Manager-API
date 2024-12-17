@@ -53,7 +53,7 @@ def create_player():
         # This handles invalid data (email and phone format)
         return {"message": err.orig.diag.message_primary}, 400
 
-# READ ALL playerS
+# READ ALL players
 
 # This function finds the requested list using an SQL Query and returns it in JSON.
 # To do this, the application:
