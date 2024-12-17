@@ -64,7 +64,7 @@ def create_campaign():
 # This defines the route for the request. It is shortened by the above blueprint.
 @campaigns_bp.route("/")
 def get_campaigns():
-    # This statement selects all inputs from the Campaign Table
+    # This statement selects all inputs from the Campaign table using the Campaign Class
     stmt = db.select(Campaign)
     # This retrieves the results as a list. Scalars will provide multiple results.
     campaigns_list = db.session.scalars(stmt)
@@ -87,7 +87,7 @@ def get_campaigns():
 # This defines the route for a GET request. It is shortened by the above blueprint.
 @campaigns_bp.route("/<int:campaign_id>")
 def get_campaign(campaign_id):
-    # This statement selects the entity based on the id and filters it using filter.by
+    # This statement selects the campaign based on the id and filters it using filter.by
     stmt = db.select(Campaign).filter_by(id=campaign_id)
     # This retrieves the result. Scalar means it retrieves a single result.
     campaign = db.session.scalar(stmt)
@@ -98,24 +98,28 @@ def get_campaign(campaign_id):
         # return the data
         return data
     else:
-        # return a 404 error message with the id
+        # else return a 404 error message with the id
         return {"message": f"Campaign with id {campaign_id} does not exist"}, 404
 
 # UPDATE A CAMPAIGN
-# This function
+# This function finds an object with the matching id and replaces the contents with the new data
 # To do this, this application:
-# -
-
+# - Finds the campaign (select), with the campaign id (filter by) and loads it (.load)
+# - If it exists, overwrite the data with the new request
+# - Commits and returns the data
+# - Integrity checks for Non Nullable and Unique constraints
 
 # This defines the route for the UPDATE request. It is shortened by the above blueprint.
+
+
 @campaigns_bp.route("/<int:campaign_id>", methods=["PUT", "PATCH"])
 def update_campaign(campaign_id):
     try:
-        # Find the campaign from the db to be updated
+        # This finds the campaign to be updated
         stmt = db.select(Campaign).filter_by(id=campaign_id)
         campaign = db.session.scalar(stmt)
 
-        # Get the data from the request body
+        # This loads the data from the request
         body_data = campaign_schema.load(request.get_json(), partial=True)
 
         # If the campaign exists
@@ -131,11 +135,12 @@ def update_campaign(campaign_id):
             # Commit the changes
             db.session.commit()
 
-            # Return the updated campaign
+            # Return the data
             return campaign_schema.dump(campaign)
 
         # If the campaign doesn't exist
         else:
+            # Return a 404 error message with the id
             return {"message": f"Campaign with id {campaign_id} doesn't exist"}, 404
 
     except IntegrityError as err:
@@ -147,14 +152,18 @@ def update_campaign(campaign_id):
             return {"message": err.orig.diag.message_detail}, 409
 
 # DELETE A CAMPAIGN
-# This function deletes an campaign by filtering for the id.
+# This function deletes a campaign by filtering for the id.
 # To do so, the application:
+# - Selects an entity (select and filter.by)
+# - Retrieves the result
+# - Deletes it
+# - Commits the change
 
 
 # This defines the route for the DELETE request. It is shortened by the above blueprint.
 @campaigns_bp.route("/<int:campaign_id>", methods=["DELETE"])
 def delete_campaign(campaign_id):
-    # This statement selects the entity based on the id and filters it using filter.by
+    # This statement selects the campaign based on the id and filters it using filter.by
     stmt = db.select(Campaign).filter_by(id=campaign_id)
     # This retrieves the result. Scalar means it retrieves a single result.
     campaign = db.session.scalar(stmt)

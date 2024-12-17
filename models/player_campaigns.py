@@ -11,9 +11,9 @@ class PlayerCampaign(db.Model):
     )
 
     player_id = db.Column(db.Integer, db.ForeignKey(
-        "players.id"), primary_key=True)
+        "players.id"), primary_key=True, nullable=False)
     campaign_id = db.Column(db.Integer, db.ForeignKey(
-        "campaigns.id"), primary_key=True)
+        "campaigns.id"), primary_key=True, nullable=False)
 
     player = db.relationship("Player", back_populates="campaigns")
     campaign = db.relationship("Campaign", back_populates="players")
