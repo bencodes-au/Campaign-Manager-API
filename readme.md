@@ -14,7 +14,7 @@ This application has basic CRUD functionality. You can create, read, update or d
 <img src="images/campaign_erd.png" alt="Campaign ERD" />
 
 ## What I Chose and Why
-For this application, I decided to use Python, with Flask as the WSGI. Python is a high level language that is known for being beginner friendly, which is perfect for where I am currently in my coding journey. Python being known for it's role in data science and processing made it an obvious choice. Compared to an alternatives such as JSNode or Express, it seemed that Flask was far more flexible on the scale which my project requires, as opposed to others which are more inclined towards scalability, real time interactions and simultaneous database requests. With Flask, I elected to use postgreSQL. I find relational databases to ne easier to work with and understand. While a NoSQL database such as MongoDB could have worked for this project, I elected to go with the method I have invested the most time in learning. 
+For this application, I decided to use Python, with Flask as the WSGI. Python is a high level language that is known for being beginner friendly, which is perfect for where I am currently in my coding journey. Python being known for it's role in data science and processing made it an obvious choice. Compared to an alternatives such as JSNode or Express, it seemed that Flask was far more flexible on the scale which my project requires, as opposed to others which are more inclined towards scalability, real time interactions and simultaneous database requests. With Flask, I elected to use postgreSQL. I find relational databases easier to work with and understand. While a NoSQL database such as MongoDB could have worked for this project, I elected to go with the method I have invested the most time in learning. 
 
 ## Imports and Libraries
 ### Flask
@@ -44,13 +44,52 @@ If you want to know more, you can read it here: https://gunicorn.org/
 
 # Feedback
 ## Feedback 1
-
+Andrea Sutton - 18/12/24
+Your phone and email in players and game master have not been specified as to whether or not they are nullable, given that they are unique it might be a good idea to make them not null.  Other then that, that all I can think of it looks good to me.
 
 ## Feedback 2
+### Strengths
 
+Clear Structure:
+The class design is clear and adheres to the conventions of SQLAlchemy and Marshmallow, making it easy to understand and maintain.
+
+Separation of Concerns:
+You've successfully separated the data model (GameMaster) from the serialisation logic (GameMasterSchema), following good design principles.
+
+Database Relationship:
+The use of db.relationship with back_populates demonstrates a good understanding of how to set up bi-directional relationships in SQLAlchemy.
+
+### Areas For Improvement:
+
+Validation on Fields:
+Currently, the fields email and phone lack proper validation.
+Email Validation: Ensure that the email field is validated to confirm it contains a proper email format.
+Phone Validation: Implement a regex-based validator to ensure the phone number is valid (e.g., contains only digits, optional country code, etc.).
+You can add validation using libraries like marshmallow.validate for schemas and validators or custom logic in the model or API layer.
+
+Nullability:
+Fields like email and phone are unique, but you haven’t enforced nullable=False. This could lead to unexpected issues (e.g., multiple records with NULL in the database). Consider setting these fields as nullable=False unless you intentionally want to allow them to be optional.
+
+email = db.Column(db.String(100), unique=True, nullable=False)
+phone = db.Column(db.String(20), unique=True, nullable=False)
+
+Relationship Behaviour:
+
+Your db.relationship is good, but consider whether you want to set cascade options to define what happens to related campaigns if a GameMaster is deleted.
+
+campaigns = db.relationship(
+    "Campaign",
+    back_populates="game_master",
+    cascade="all, delete-orphan"
+)
+
+Schema Serialisation:
+The schema looks good, but if you plan to use it in an API, consider adding error handling for invalid data.
 
 ## Implementation of Feedback
-
+- Added a Nullable constraint to the email and phone fields
+- Added validation for email and phone
+- 
 
 # Set Up 
 Users will be able access the database from the hosting link provided at the top of this read me. 
