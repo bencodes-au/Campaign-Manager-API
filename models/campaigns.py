@@ -1,3 +1,4 @@
+from marshmallow import fields, validate
 from init import db, ma
 
 from models.game_masters import GameMaster
@@ -26,6 +27,40 @@ class CampaignSchema(ma.Schema):
     class Meta:
         fields = ("id", "game_master_id", "name",
                   "genre", "description")
+
+    name = fields.Str(
+        required=True,
+        validate=[
+            validate.Length(
+                min=1, max=100, error="This field must be between 1 and 100 characters."),
+            validate.Regexp(
+                r'^[A-Za-z\s\-\'&]+$',
+                error="This field can only contain letters (A-Z, a-z), spaces, hyphens (-), apostrophes ('), and ampersands (&)."
+            ),
+        ]
+    )
+
+    genre = fields.Str(
+        validate=[
+            validate.Length(
+                min=1, max=100, error="This field must be between 1 and 100 characters."),
+            validate.Regexp(
+                r'^[A-Za-z\s\-\'&]+$',
+                error="This field can only contain letters (A-Z, a-z), spaces, hyphens (-), apostrophes ('), and ampersands (&)."
+            ),
+        ]
+    )
+
+    description = fields.Str(
+        validate=[
+            validate.Length(
+                min=1, max=100, error="This field must be between 1 and 100 characters."),
+            validate.Regexp(
+                r'^[A-Za-z\s\-\'&]+$',
+                error="This field can only contain letters (A-Z, a-z), spaces, hyphens (-), apostrophes ('), and ampersands (&)."
+            ),
+        ]
+    )
 
 
 campaign_schema = CampaignSchema()

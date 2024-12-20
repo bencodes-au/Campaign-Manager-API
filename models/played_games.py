@@ -1,3 +1,5 @@
+from marshmallow import fields, validate
+
 from init import db, ma
 
 
@@ -15,6 +17,17 @@ class PlayedGame(db.Model):
 class PlayedGameSchema(ma.Schema):
     class Meta:
         fields = ("id", "campaign_id", "synopsis")
+
+    synopsis = fields.Str(
+        validate=[
+            validate.Length(
+                min=1, max=100, error="This field must be between 1 and 100 characters."),
+            validate.Regexp(
+                r'^[A-Za-z\s\-\'&]+$',
+                error="This field can only contain letters (A-Z, a-z), spaces, hyphens (-), apostrophes ('), and ampersands (&)."
+            ),
+        ]
+    )
 
 
 played_game_schema = PlayedGameSchema()
