@@ -20,25 +20,47 @@ class GameMasterSchema(ma.Schema):
 
     first_name = fields.Str(
         required=True,
-        validate=validate.Length(
-            min=1, max=100, error="First name must be between 1 and 100 characters.")
+        validate=[
+            validate.Length(
+                min=1, max=100, error="This field must be between 1 and 100 characters."),
+            validate.Regexp(
+                r'^[A-Za-z\s\-\'&]+$',
+                error="This field can only contain letters (A-Z, a-z), spaces, hyphens (-), apostrophes ('), and ampersands (&)."
+            ),
+        ]
     )
     last_name = fields.Str(
         required=True,
-        validate=validate.Length(
-            min=1, max=100, error="Last name must be between 1 and 100 characters.")
+        validate=[
+            validate.Length(
+                min=1, max=100, error="This field must be between 1 and 100 characters."),
+            validate.Regexp(
+                r'^[A-Za-z\s\-\'&]+$',
+                error="This field can only contain letters (A-Z, a-z), spaces, hyphens (-), apostrophes ('), and ampersands (&)."
+            ),
+        ]
     )
     email = fields.Email(
         required=True,
-        validate=validate.Email(error="Invalid email address.")
+        validate=[
+            validate.Length(
+                min=1, max=100, error="This field must be between 1 and 100 characters."),
+            validate.Regexp(
+                r'^[A-Za-z\s\-\'&]+$',
+                error="This field can only contain letters (A-Z, a-z), spaces, hyphens (-), apostrophes ('), and ampersands (&)."
+            ),
+        ]
     )
-
     phone = fields.Str(
         required=True,
-        validate=validate.Regexp(
-            r'^\+?1?\d{9,15}$',
-            error="Invalid phone number."
-        )
+        validate=[
+            validate.Length(
+                min=1, max=100, error="This field must be between 1 and 100 characters."),
+            validate.Regexp(
+                r'^[A-Za-z\s\-\'&]+$',
+                error="This field can only contain letters (A-Z, a-z), spaces, hyphens (-), apostrophes ('), and ampersands (&)."
+            ),
+        ]
     )
 
 

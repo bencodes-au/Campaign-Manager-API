@@ -89,7 +89,8 @@ The schema looks good, but if you plan to use it in an API, consider adding erro
 ## Implementation of Feedback
 - Added a Nullable constraint to the email and phone fields
 - Added validation for email and phone
-- 
+- Added validation for the rest of the program
+- Considered 
 
 # Set Up 
 Users will be able access the database from the hosting link provided at the top of this read me. 

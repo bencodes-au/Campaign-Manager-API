@@ -24,7 +24,7 @@ def create_campaign():
 
     try:
         # This loads in the campaign schema
-        body_data = campaign_schema().load(request.get_json())
+        body_data = campaign_schema.load(request.get_json())
 
         # This creates a new object with the required criteria
         new_campaign = Campaign(
@@ -39,7 +39,7 @@ def create_campaign():
         db.session.commit()
 
         # This returns the new campaign
-        return campaign_schema().dump(new_campaign), 201
+        return campaign_schema.dump(new_campaign), 201
     # This checks for conflicts between requests and conditions ie unique, null (409)
     except IntegrityError as err:
         # This checks for breaches of NON-NULL
