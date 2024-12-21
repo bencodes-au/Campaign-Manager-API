@@ -48,8 +48,8 @@ Andrea Sutton - 18/12/24
 Your phone and email in players and game master have not been specified as to whether or not they are nullable, given that they are unique it might be a good idea to make them not null.  Other then that, that all I can think of it looks good to me.
 
 ## Feedback 2
+Evan - 20/12/24
 ### Strengths
-
 Clear Structure:
 The class design is clear and adheres to the conventions of SQLAlchemy and Marshmallow, making it easy to understand and maintain.
 
@@ -87,10 +87,9 @@ Schema Serialisation:
 The schema looks good, but if you plan to use it in an API, consider adding error handling for invalid data.
 
 ## Implementation of Feedback
-- Added a Nullable constraint to the email and phone fields
-- Added validation for email and phone
-- Added validation for the rest of the program
-- Considered 
+- Added a Nullable constraint to the email and phone fields that Andrea suggested
+- Added validation for email and phone like Evan suggested
+- Added error handling to ensure only certain characters could be used to catch the invalid data Evan mentioned
 
 # Set Up 
 Users will be able access the database from the hosting link provided at the top of this read me. 
