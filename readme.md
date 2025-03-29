@@ -1,8 +1,6 @@
 # Welcome to my Campaign Manager API
 GitHub: https://github.com/BenGormanCode/Campaign-Manager-API
 
-Online Host: https://ben-gorman-code-campaign-manager-api.onrender.com
-
 # Overview
 This is a Campaign Manager for Tabletop Roleplay Games. This tool is designed to hold all the information a gaming group should need in regards to their campaigns including the game master, the campaign, the games played, the characters and the players. Storing all of this information would be useful for keeping track of all the games the user has played or for a venue that is holding multiple of these games at once. 
 
